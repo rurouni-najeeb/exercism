@@ -107,7 +107,7 @@ describe('Robot', () => {
     expect(letters).toEqual('')
   })
 
-  xit('uses all numbers', () => {
+  it('uses all numbers', () => {
     let numbers = '0123456789'
 
     for (let i = 0; i < 1000 - 1; i += 1) {

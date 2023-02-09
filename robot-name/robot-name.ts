@@ -38,33 +38,33 @@ export class Robot {
     if(Robot.prefixList.length > 0){
       let inx : number = Math.ceil(Math.random() * (Robot.prefixList.length - 1));
       prefix = Robot.prefixList[inx];
-      Robot.prefixList.splice(inx);
+      Robot.prefixList.splice(inx, 1);
       Robot.usedPrefix.push(prefix);
     }
     if(Robot.suffixList.length > 0){
       let inx : number = Math.ceil(Math.random() * (Robot.suffixList.length - 1));
       suffix = Robot.suffixList[inx];
-      Robot.suffixList.splice(inx);
-      Robot.usedPrefix.push(suffix);
+      Robot.suffixList.splice(inx, 1);
+      Robot.usedSuffix.push(suffix);
     }
 
     if(prefix !== "" && suffix !== ""){
       generatedString = `${prefix}${suffix}`;
     }
     if(prefix === "" && suffix !== ""){
-      while(generatedString !== "" && Robot.nameSet.has(generatedString)){
+      while(generatedString === "" || Robot.nameSet.has(generatedString)){
         let inx : number = Math.ceil(Math.random() * (Robot.usedPrefix.length - 1));
         generatedString = `${Robot.usedPrefix[inx]}${suffix}`;
       }
     }
     if(prefix !== "" && suffix === ""){
-      while(generatedString !== "" && Robot.nameSet.has(generatedString)){
+      while(generatedString === "" || Robot.nameSet.has(generatedString)){
         let inx : number = Math.ceil(Math.random() * (Robot.usedSuffix.length - 1));
         generatedString = `${prefix}${Robot.usedSuffix[inx]}`;
       }
     }
     if(prefix === "" && suffix === ""){
-      while(generatedString !== "" && Robot.nameSet.has(generatedString)){
+      while(generatedString === "" || Robot.nameSet.has(generatedString)){
         let prefixInx : number = Math.ceil(Math.random() * (Robot.usedPrefix.length - 1));
         let suffixInx : number = Math.ceil(Math.random() * (Robot.usedSuffix.length - 1))
         generatedString = `${Robot.usedPrefix[prefixInx]}${Robot.usedSuffix[suffixInx]}`;
