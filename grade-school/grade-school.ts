@@ -1,36 +1,51 @@
+type rosterType = {
+  [grade: number] : string[]
+};
+
 export class GradeSchool {
-  _roster : Map<number, string[]>;
+  _roster : rosterType
   _grades : number[];
 
   constructor(){
-    this._roster = new Map<number, string[]>;
+    this._roster = {};
     this._grades = [];
   }
 
-  roster(grade : number = -1) : Map<number, string[]> | string[]{
-    if(grade === -1){
-      let roster = new Map<number, string[]>();
-      this._grades.forEach((element) => { 
-        roster.set(element, this._roster.get(element)!);
-      })
-      return roster;
-    }
-    return this._roster.get(grade);
+  roster() : rosterType {
+    let roster : rosterType = {};
+    this._grades.forEach((element) => { 
+      roster[element] = Object.assign([], this._roster[element]);
+    })
+    return roster;
   }
 
   add(name: string, grade: number) {
-    if(this._roster.has(grade)){
+    let key = GradeSchool.findKey(name, this._roster)
+    if(key !== -1){
+      let students : string[] = this._roster[key];
+      students.splice(students.indexOf(name), 1);
+    }
+    
+    if(grade in this._roster){
       let ptr: number = 0;
-      let students : string[] = this._roster.get(grade)!;
+      let students : string[] = this._roster[grade];
       while(ptr < students.length && students[ptr] < name)
         ptr += 1;
       students.splice(ptr, 0, name);
-      this._roster.set(grade, students);
+      this._roster[grade] = students;
     }
     else{
-      this._roster.set(grade, [name]);
+      this._roster[grade] = [name];
       this._grades = GradeSchool.add_grade(grade, this._grades);
     }
+  }
+
+  private static findKey(name: string, roster: rosterType) : number{
+    for(const [key, value] of Object.entries(roster)){
+      if(value.includes(name))
+        return Number(key);
+    }
+    return -1;
   }
 
   private static add_grade(grade : number, grades: number[]) : number[]{
@@ -41,7 +56,10 @@ export class GradeSchool {
     return grades
   }
 
-  grade() {
-    throw new Error('Remove this statement and implement this function')
+  grade(item : number) : string[] {
+    if(item in this._roster)
+      return Object.assign([], this._roster[item]);
+    else
+      return [];
   }
 }
