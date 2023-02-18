@@ -64,6 +64,10 @@ export class LinkedList<TElement> {
     // Push back the tail
     let node = this._tail;
     this._tail = node.left;
+
+    // Popping the last element in the list
+    if(this._tail === null)
+      this._head = null;
     
     // Orphan the node
     node.left = null;
@@ -78,6 +82,10 @@ export class LinkedList<TElement> {
     // Move the head pointer
     let node = this._head;
     this._head = node.right;
+
+    // Popping the last element in the list
+    if(this._head === null)
+      this._tail = null;
 
     // Orphan the node
     node.left = node.right = null;
@@ -101,16 +109,16 @@ export class LinkedList<TElement> {
     let ptr = this._head;
     while(ptr !== null){
       if(ptr.value === element){
-        ptr.left!.right = ptr.right;
-        
-        if(ptr.right !== null)
+        if(ptr.left !== null)
+          ptr.left!.right = ptr.right;
+        else if(ptr.right !== null)
           ptr.right!.left = ptr.left;
+        else
+          this._head = this._tail = null;
         return
       }
-      ptr = ptr.left
+      ptr = ptr.right
     }
-
-    throw new Error('Could not find the element in the list')
   }
 
   public count(): number {
@@ -118,7 +126,7 @@ export class LinkedList<TElement> {
     let num_elements : number = 0;
     while(ptr !== null){
       num_elements++;
-      ptr = ptr.left
+      ptr = ptr.right
     }
     return num_elements;
   }
