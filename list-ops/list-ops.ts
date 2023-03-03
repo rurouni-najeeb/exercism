@@ -25,14 +25,17 @@ class Node {
 export class List {
   _head : Node | null;
   _tail : Node | null;
+  _length : number;
 
   constructor(values : unknown[]) {
     let prev : Node | null = null;
     this._head = null;
     this._tail = null;
+    this._length = 0;
 
     values.forEach(element => {
-      this.push(element);  
+      this.push(element);
+      this._length++;  
     });
   }
 
@@ -68,8 +71,43 @@ export class List {
         this._tail!.next = node;
       ptr = ptr.next;
     }
+    this._length += other.length();
   }
 
+  public concat(other : List){
+    throw new Error("Not Implemented");
+  }
+
+  public filter<T>(callback : (item : T) => void){
+    throw new Error("Not Implemented");
+  }
+
+  public length() : number {
+    return this._length;
+  }
+
+  public map<T>(callback : (item : T) => void){
+    throw new Error("Not Implemented");
+  }
+
+  public foldl<T, R>(callback : (item1: T, item2: T) => T, constant : R){
+    throw new Error("Not Implemented");
+  }
+
+  public foldr<T, R>(callback : (item1: T, item2: T) => T, constant : R){
+    throw new Error("Not Implemented");
+  }
+
+  public reverse() {
+    let ptr = this._head
+    if(ptr !== null){
+      let values : typeof ptr.value[] = [];
+      return new List(values);
+    }
+    return this;
+  }
+
+  // Getter implementation
   public get head() : Node | null{
     return this._head;
   }
