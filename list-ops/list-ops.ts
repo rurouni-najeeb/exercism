@@ -34,14 +34,15 @@ export class List {
     this._length = 0;
 
     values.forEach(element => {
-      this.push(element);
-      this._length++;  
+      this.push(element);  
     });
   }
 
   private push(value : unknown){
     let node = new Node(value);
-    if(this._head !== null){
+    this._length++;
+    
+    if(this._head === null){
       this._head = node;
       this._tail = node;
       return;
@@ -60,18 +61,15 @@ export class List {
 
   };
 
-  public append(other : List){
+  public append(other : List) : List{
     let ptr = other.head;
 
     while(ptr !== null){
-      let node = new Node(ptr.value);
-      if(this._head === null)
-        this._head = this._tail = node;
-      else
-        this._tail!.next = node;
+      this.push(ptr.value);
       ptr = ptr.next;
     }
     this._length += other.length();
+    return this
   }
 
   public concat(other : List){
