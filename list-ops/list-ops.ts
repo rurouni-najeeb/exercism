@@ -34,14 +34,20 @@ export class List {
     this._length = 0;
 
     values.forEach(element => {
-      this.push(element);  
+      if(element instanceof List){
+        let newList = this.concat(element);
+        this._head = newList.head;
+        this._tail = newList.tail;
+      }
+      else
+        this.push(element);  
     });
   }
 
   private push(value : unknown){
     let node = new Node(value);
     this._length++;
-    
+
     if(this._head === null){
       this._head = node;
       this._tail = node;
@@ -72,7 +78,7 @@ export class List {
     return this
   }
 
-  public concat(other : List){
+  public concat(other : List) : List{
     throw new Error("Not Implemented");
   }
 
@@ -108,6 +114,9 @@ export class List {
   // Getter implementation
   public get head() : Node | null{
     return this._head;
+  }
+  public get tail() : Node | null{
+    return this._tail;
   }
   public static create(...values: unknown[]): List {
     // Do *not* construct any array literal ([]) in your solution.
