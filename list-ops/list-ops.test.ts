@@ -60,13 +60,13 @@ describe('append entries to a list and return the new list', () => {
 })
 
 describe('concat lists and lists of lists into new list', () => {
-  xit('empty list', () => {
+  it('empty list', () => {
     const list1 = List.create()
     const list2 = List.create()
     expect(list1.concat(list2)).toHaveValues()
   })
 
-  xit('list of lists', () => {
+  it('list of lists', () => {
     const list1 = List.create(1, 2)
     const list2 = List.create(3)
     const list3 = List.create()

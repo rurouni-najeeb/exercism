@@ -38,6 +38,7 @@ export class List {
         let newList = this.concat(element);
         this._head = newList.head;
         this._tail = newList.tail;
+        this._length = newList.length();
       }
       else
         this.push(element);  
@@ -74,12 +75,14 @@ export class List {
       this.push(ptr.value);
       ptr = ptr.next;
     }
-    this._length += other.length();
     return this
   }
 
   public concat(other : List) : List{
-    throw new Error("Not Implemented");
+    var concatList = List.create();
+    concatList.append(this);
+    concatList.append(other);
+    return concatList;
   }
 
   public filter<T>(callback : (item : T) => void){
