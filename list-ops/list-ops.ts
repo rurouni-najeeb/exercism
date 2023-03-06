@@ -108,26 +108,39 @@ export class List {
     return newList;
   }
 
-  public foldl<T, R>(callback: (item1: T, item2: T) => T, constant: T): T {
-    var acc: T = constant;
+  public foldl<T, R>(
+    callback: (item1: T | R, item2: T | R) => T,
+    constant: T | R
+  ): T | R {
+    var acc: T | R = constant;
     let ptr = this._head;
     while (ptr !== null) {
-      acc = callback(acc, ptr.value as T);
+      acc = callback(acc, ptr.value as T | R);
       ptr = ptr.next;
     }
     return acc;
   }
 
-  public foldr<T, R>(callback: (item1: T, item2: T) => T, constant: R) {
-    throw new Error("Not Implemented");
+  public foldr<T, R>(
+    callback: (item1: T | R, item2: T | R) => T,
+    constant: T | R
+  ): T | R {
+    return this.reverse().foldl<T, R>(callback, constant);
   }
 
-  public reverse() {
-    let ptr = this._head;
-    if (ptr !== null) {
-      let values: typeof ptr.value[] = [];
-      return new List(values);
+  public reverse(): List {
+    if (this._head === null) return this;
+    let ptr: Node | null;
+    let prev: Node | null = null;
+
+    while (this.head !== null) {
+      ptr = this._head!.next;
+      this._head!.next = prev;
+      prev = this.head;
+      this._head = ptr as Node;
     }
+    this._head = prev;
+
     return this;
   }
 

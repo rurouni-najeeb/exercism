@@ -130,34 +130,34 @@ describe("folds (reduces) the given list from the left with a function", () => {
 });
 
 describe("folds (reduces) the given list from the right with a function", () => {
-  xit("empty list", () => {
+  it("empty list", () => {
     const list1 = List.create();
     expect(list1.foldr<number, number>((acc, el) => el * acc, 2)).toEqual(2);
   });
 
-  xit("direction independent function applied to non-empty list", () => {
+  it("direction independent function applied to non-empty list", () => {
     const list1 = List.create(1, 2, 3, 4);
     expect(list1.foldr<number, number>((acc, el) => acc + el, 5)).toEqual(15);
   });
 
-  xit("direction dependent function applied to non-empty list", () => {
+  it("direction dependent function applied to non-empty list", () => {
     const list1 = List.create(1, 2, 3, 4);
     expect(list1.foldr<number, number>((acc, el) => el / acc, 24)).toEqual(9);
   });
 });
 
 describe("reverse the elements of a list", () => {
-  xit("empty list", () => {
+  it("empty list", () => {
     const list1 = List.create();
     expect(list1.reverse()).toHaveValues();
   });
 
-  xit("non-empty list", () => {
+  it("non-empty list", () => {
     const list1 = List.create(1, 3, 5, 7);
     expect(list1.reverse()).toHaveValues(7, 5, 3, 1);
   });
 
-  xit("list of lists is not flattened", () => {
+  it("list of lists is not flattened", () => {
     const list1 = List.create([1, 2], [3], [], [4, 5, 6]);
     expect(list1.reverse()).toHaveValues([4, 5, 6], [], [3], [1, 2]);
   });
