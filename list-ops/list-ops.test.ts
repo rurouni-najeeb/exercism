@@ -77,24 +77,24 @@ describe('concat lists and lists of lists into new list', () => {
 })
 
 describe('filter list returning only values that satisfy the filter function', () => {
-  xit('empty list', () => {
+  it('empty list', () => {
     const list1 = List.create()
     expect(list1.filter<number>((el) => el % 2 === 1)).toHaveValues()
   })
 
-  xit('non empty list', () => {
+  it('non empty list', () => {
     const list1 = List.create(1, 2, 3, 5)
     expect(list1.filter<number>((el) => el % 2 === 1)).toHaveValues(1, 3, 5)
   })
 })
 
 describe('returns the length of a list', () => {
-  xit('empty list', () => {
+  it('empty list', () => {
     const list1 = List.create()
     expect(list1.length()).toEqual(0)
   })
 
-  xit('non-empty list', () => {
+  it('non-empty list', () => {
     const list1 = List.create(1, 2, 3, 4)
     expect(list1.length()).toEqual(4)
   })

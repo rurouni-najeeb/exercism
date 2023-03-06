@@ -85,8 +85,17 @@ export class List {
     return concatList;
   }
 
-  public filter<T>(callback : (item : T) => void){
-    throw new Error("Not Implemented");
+  public filter<T>(callback : (item : T) => boolean) : List{
+    let ptr = this._head;
+    var newList = List.create();
+
+    while(ptr !== null){
+      if(callback(ptr.value as T))
+        newList.push(ptr.value);
+      
+      ptr = ptr.next;
+    }
+    return newList;
   }
 
   public length() : number {
