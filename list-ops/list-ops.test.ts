@@ -101,12 +101,12 @@ describe("returns the length of a list", () => {
 });
 
 describe("returns a list of elements whose values equal the list value transformed by the mapping function", () => {
-  xit("empty list", () => {
+  it("empty list", () => {
     const list1 = List.create();
     expect(list1.map<number>((el) => ++el)).toHaveValues();
   });
 
-  xit("non-empty list", () => {
+  it("non-empty list", () => {
     const list1 = List.create(1, 3, 5, 7);
     expect(list1.map<number>((el) => ++el)).toHaveValues(2, 4, 6, 8);
   });

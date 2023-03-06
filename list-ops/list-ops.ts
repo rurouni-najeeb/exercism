@@ -98,8 +98,14 @@ export class List {
     return this._length;
   }
 
-  public map<T>(callback: (item: T) => void) {
-    throw new Error("Not Implemented");
+  public map<T>(callback: (item: T) => T): List {
+    let ptr = this._head;
+    var newList = List.create();
+    while (ptr !== null) {
+      newList.push(callback(ptr.value as T));
+      ptr = ptr.next;
+    }
+    return newList;
   }
 
   public foldl<T, R>(callback: (item1: T, item2: T) => T, constant: T): T {
