@@ -1,3 +1,9 @@
 node_modules/
 .DS_Store
 .vscode/
+.metals
+.scala-build
+scala/**/project/target
+scala/**/.exercism
+scala/**/project
+scala/**/target
