@@ -29,3 +29,18 @@ object SpaceAgeCurry {
   val onUranus = calculate(84.016846)
   val onNeptune = calculate(164.79132)
 }
+
+object SpaceAgePartitionFunction {
+  private val EARTH_SECONDS = 31_557_600.0
+  private def calculate(orbitPeriod: Double, seconds: Double) = 
+    seconds / EARTH_SECONDS / orbitPeriod
+
+  val onVenus = calculate(0.61519726, _)
+  val onEarth = calculate(1, _)
+  val onMercury = calculate(0.2408467, _)
+  val onMars = calculate(1.8808158, _)
+  val onJupiter = calculate(11.862615, _)
+  val onSaturn = calculate(29.447498, _)
+  val onUranus = calculate(84.016846, _)
+  val onNeptune = calculate(164.79132, _)
+}
