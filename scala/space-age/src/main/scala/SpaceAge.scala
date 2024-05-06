@@ -1,3 +1,5 @@
+import scala.language.dynamics
+
 object SpaceAge {
   def onEarth(age: Double): Double = age / 31557600
 
@@ -9,7 +11,7 @@ object SpaceAge {
 
   def onJupiter(age: Double): Double = onEarth(age) / 11.862615
 
-  def onSaturn(age: Double): Double = onEarth(age) /  29.447498
+  def onSaturn(age: Double): Double = onEarth(age) / 29.447498
 
   def onUranus(age: Double): Double = onEarth(age) / 84.016846
 
@@ -18,7 +20,8 @@ object SpaceAge {
 
 object SpaceAgeCurry {
   private val EARTH_SECONDS = 31_557_600.0
-  private def calculate(orbitPeriod: Double) = (seconds : Double) => seconds / EARTH_SECONDS / orbitPeriod
+  private def calculate(orbitPeriod: Double) = (seconds: Double) =>
+    seconds / EARTH_SECONDS / orbitPeriod
 
   val onVenus = calculate(0.61519726)
   val onEarth = calculate(1)
@@ -32,7 +35,7 @@ object SpaceAgeCurry {
 
 object SpaceAgePartitionFunction {
   private val EARTH_SECONDS = 31_557_600.0
-  private def calculate(orbitPeriod: Double, seconds: Double) = 
+  private def calculate(orbitPeriod: Double, seconds: Double) =
     seconds / EARTH_SECONDS / orbitPeriod
 
   val onVenus = calculate(0.61519726, _)
@@ -43,4 +46,23 @@ object SpaceAgePartitionFunction {
   val onSaturn = calculate(29.447498, _)
   val onUranus = calculate(84.016846, _)
   val onNeptune = calculate(164.79132, _)
+}
+
+object SpaceAgeDynamic extends Dynamic {
+  private val EARTH_SECONDS = 31_557_600.0
+  private val orbitPeriod: Map[String, Double] = Map(
+    "Venus" -> 0.61519726,
+    "Earth" -> 1,
+    "Mercury" -> 0.2408467,
+    "Mars" -> 1.8808158,
+    "Jupiter" -> 11.862615,
+    "Saturn" -> 29.447498,
+    "Uranus" -> 84.016846,
+    "Neptune" -> 164.79132
+  )
+  private def calculate(planet: String, seconds: Double): Double =
+    seconds / EARTH_SECONDS / orbitPeriod.getOrElse(planet, 1.0)
+
+  def applyDynamic(methodCall: String)(seconds: Double): Double =
+    calculate(methodCall.substring(2), seconds)
 }
