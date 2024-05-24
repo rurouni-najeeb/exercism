@@ -8,3 +8,4 @@ scala/**/.exercism
 scala/**/.bloop
 scala/**/project
 scala/**/target
+scala/**/.bsp
