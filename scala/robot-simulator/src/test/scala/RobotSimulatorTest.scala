@@ -109,7 +109,6 @@ class RobotSimulatorTest extends AnyFunSuite with Matchers {
   test(
     "Where R = Turn Right, L = Turn Left and A = Advance, the robot can follow a series of instructions and end up with the correct position and direction - instructions to move west and north"
   ) {
-    pending
     Robot(Bearing.North, (0, 0)).simulate("LAAARALA") should be(
       Robot(Bearing.West, (-4, 1))
     )

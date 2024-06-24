@@ -38,8 +38,11 @@ class Advance(curBearing: Bearing.Bearing, curPos: (Int, Int)) extends Turn {
   }
 }
 case class Robot(direction: Bearing.Bearing, initPos: (Int, Int)) {
-  val turnRight = new RightTurn(direction, initPos)
-  val turnLeft = new LeftTurn(direction, initPos)
-  val advance = new Advance(direction, initPos)
-  def simulate(instructions: String): Unit = {}
+  var curPos = initPos
+  var curBearing = direction
+  val turnRight = new RightTurn(curBearing, curPos)
+  val turnLeft = new LeftTurn(curBearing, curPos)
+  val advance = new Advance(curBearing, curPos)
+  def simulate(instructions: String): Robot =
+    RobotSimulator.simulate(this, instructions)
 }
